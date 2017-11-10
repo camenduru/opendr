@@ -4,7 +4,6 @@ Author(s): Matthew Loper
 See LICENCE.txt for licensing and contact information.
 """
 __all__ = ['mstack', 'wget']
-
 def mstack(vs, fs):
     import chumpy as ch
     import numpy as np
@@ -16,7 +15,8 @@ def mstack(vs, fs):
 
 
 def wget(url, dest_fname=None):
-    import urllib2
+    import six.moves.urllib as urllib
+    #import six.moves.urllib.request, six.moves.urllib.error, six.moves.urllib.parse
     from os.path import split, join
 
     curdir = split(__file__)[0]
@@ -24,7 +24,7 @@ def wget(url, dest_fname=None):
         dest_fname = join(curdir, split(url)[1])
 
     try:
-        contents = urllib2.urlopen(url).read()
+        contents = urllib.request.urlopen(url).read()
     except:
         raise Exception('Unable to get url: %s' % (url,))
-    open(dest_fname, 'w').write(contents)
+    open(dest_fname, 'wb').write(contents)
