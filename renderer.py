@@ -816,7 +816,7 @@ def _setup_camera(gl, cx, cy, fx, fy, w, h, near, far, view_matrix, k):
             program = gl.CreateProgram()
 
             vs = gl.CreateShader(GL_VERTEX_SHADER)
-            gl.ShaderSource(vs, 1, vs_source, len(vs_source))
+            gl.ShaderSource(vs, 1, vs_source.encode('utf-8'), len(vs_source))
             gl.AttachShader(program, vs)
 
             # fs = gl.CreateShader(GL_FRAGMENT_SHADER)
@@ -834,7 +834,7 @@ def _setup_camera(gl, cx, cy, fx, fy, w, h, near, far, view_matrix, k):
             k[:len(tmp)] = tmp
 
         for idx, vname in enumerate(['k1', 'k2', 'p1', 'p2', 'k3', 'k4', 'k5', 'k6']):
-            loc = gl.GetUniformLocation(gl.distortion_shader, vname)
+            loc = gl.GetUniformLocation(gl.distortion_shader, vname.encode('utf-8'))
             gl.Uniform1f(loc, k[idx])
     else:
         gl.UseProgram(0)
